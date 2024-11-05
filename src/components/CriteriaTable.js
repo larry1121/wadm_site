@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 
 function CriteriaTable({ criteria, setCriteria }) {
   const [errors, setErrors] = useState({}); // 에러 상태 추가
+  const [newCriterionName, setNewCriterionName] = useState(''); // 새 고려사항 이름 상태
+  const [newCriterionImportance, setNewCriterionImportance] = useState(5); // 새 고려사항 중요도
 
+  // 중요도 변경 핸들러
   const handleImportanceChange = (criterionId, value) => {
     if (value < 1 || value > 10) {
       setErrors((prevErrors) => ({
@@ -10,7 +13,7 @@ function CriteriaTable({ criteria, setCriteria }) {
         [criterionId]: '중요도는 1에서 10 사이여야 합니다.',
       }));
     } else {
-      setErrors((prevErrors) => ({ ...prevErrors, [criterionId]: null })); // 유효한 값 입력 시 오류 제거
+      setErrors((prevErrors) => ({ ...prevErrors, [criterionId]: null }));
       const updatedCriteria = criteria.map((criterion) => {
         if (criterion.id === criterionId) {
           return { ...criterion, importance: parseInt(value) || 0 };
@@ -21,6 +24,7 @@ function CriteriaTable({ criteria, setCriteria }) {
     }
   };
 
+  // 점수 변경 핸들러
   const handleScoreChange = (criterionId, alternativeIndex, value) => {
     if (value < 1 || value > 10) {
       setErrors((prevErrors) => ({
@@ -30,7 +34,7 @@ function CriteriaTable({ criteria, setCriteria }) {
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        [`${criterionId}-${alternativeIndex}`]: null, // 유효한 값 입력 시 오류 제거
+        [`${criterionId}-${alternativeIndex}`]: null,
       }));
       const updatedCriteria = criteria.map((criterion) => {
         if (criterion.id === criterionId) {
@@ -42,6 +46,29 @@ function CriteriaTable({ criteria, setCriteria }) {
       });
       setCriteria(updatedCriteria);
     }
+  };
+
+  // 고려사항 추가 핸들러
+  const handleAddCriterion = () => {
+    if (!newCriterionName.trim()) {
+      alert('고려사항 이름을 입력하세요.');
+      return;
+    }
+    const newCriterion = {
+      id: criteria.length + 1,
+      name: newCriterionName,
+      importance: newCriterionImportance,
+      scores: [0, 0, 0],
+    };
+    setCriteria([...criteria, newCriterion]);
+    setNewCriterionName('');
+    setNewCriterionImportance(5);
+  };
+
+  // 고려사항 삭제 핸들러
+  const handleRemoveCriterion = (criterionId) => {
+    const updatedCriteria = criteria.filter((criterion) => criterion.id !== criterionId);
+    setCriteria(updatedCriteria);
   };
 
   return (
@@ -56,6 +83,7 @@ function CriteriaTable({ criteria, setCriteria }) {
             <th>대안 1</th>
             <th>대안 2</th>
             <th>대안 3</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
@@ -95,10 +123,31 @@ function CriteriaTable({ criteria, setCriteria }) {
                   )}
                 </td>
               ))}
+              <td>
+                <button onClick={() => handleRemoveCriterion(criterion.id)}>삭제</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* 고려사항 추가 입력란 */}
+      <div className="add-criterion">
+        <input
+          type="text"
+          placeholder="고려사항 이름"
+          value={newCriterionName}
+          onChange={(e) => setNewCriterionName(e.target.value)}
+        />
+        <input
+          type="number"
+          min="1"
+          max="10"
+          value={newCriterionImportance}
+          onChange={(e) => setNewCriterionImportance(parseInt(e.target.value) || 5)}
+        />
+        <button onClick={handleAddCriterion}>고려사항 추가</button>
+      </div>
     </div>
   );
 }
