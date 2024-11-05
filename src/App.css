@@ -63,17 +63,19 @@ tr:hover {
   margin-top: 4px;
 }
 
-/* 입력 필드 및 버튼 스타일 */
+/* 숫자 입력 필드 스타일 조정 */
 input[type="number"],
 input[type="text"] {
   width: 100%;
-  max-width: 80px;
-  padding: 6px;
+  max-width: 60px; /* 모바일에서 최대 너비 제한 */
+  padding: 5px;
   font-size: 0.9rem;
   border: 1px solid #dde5ed;
   border-radius: 4px;
   background-color: #fff;
+  box-sizing: border-box; /* 테이블 셀 크기에 맞추기 */
 }
+
 
 input[type="number"]:focus,
 input[type="text"]:focus {
@@ -168,8 +170,9 @@ button:disabled {
 
   input[type="number"],
   input[type="text"] {
-    max-width: 60px;
-    padding: 5px;
+    max-width: 50px; /* 모바일 환경에서 더욱 작은 최대 너비 */
+    padding: 4px;
+    font-size: 0.85rem;
   }
 
   button {
@@ -213,6 +216,12 @@ button:disabled {
     padding: 8px;
   }
 
+  input[type="number"],
+  input[type="text"] {
+    max-width: 45px; /* 소형 화면에서 최대 너비를 더 축소 */
+    padding: 4px;
+    font-size: 0.8rem;
+  }
   /* 입력 필드와 버튼 너비 전체 사용 */
   input[type="number"],
   input[type="text"],
