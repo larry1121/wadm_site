@@ -223,3 +223,57 @@ button:disabled {
     font-size: 0.8rem;
   }
 }
+/* 사이트 설명 스타일 */
+.site-description {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #eef5fc;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  text-align: left;
+}
+
+.site-description p {
+  margin: 0;
+  line-height: 1.6;
+}
+/* FAQ 섹션 스타일 */
+.faq-section {
+  background-color: #f1f4f8;
+  padding: 20px;
+  margin-top: 30px;
+  border-top: 1px solid #dde5ed;
+  text-align: left;
+}
+
+.faq-section h2 {
+  font-size: 1.5rem;
+  color: #4a90e2;
+}
+
+.faq-section h3 {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  color: #333;
+}
+
+.faq-section p {
+  font-size: 1rem;
+  margin: 8px 0 16px;
+  line-height: 1.6;
+  color: #666;
+}
+/* 기존 코드 유지 */
+
+/* 계산 및 초기화 버튼과 대안 요약 테이블 간의 간격 추가 */
+.control-buttons {
+  margin-top: 20px; /* 간격을 20px 추가 */
+}
+.control-buttons button {
+  margin-right: 10px; /* 버튼 사이의 가로 간격 */
+}
+
+.control-buttons button:last-child {
+  margin-right: 0; /* 마지막 버튼의 여백 제거 */
+}

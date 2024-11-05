@@ -145,7 +145,8 @@ function App() {
     setLoading(false);
   };
 
-  const handleDownloadPDF = () => {
+   // PDF 다운로드 및 소셜 미디어 공유 관련 함수
+   const handleDownloadPDF = () => {
     const content = document.getElementById('pdf-content');
     html2canvas(content, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
@@ -157,12 +158,31 @@ function App() {
     });
   };
 
+  // 소셜 미디어 공유를 위한 이미지 캡처 기능
+  const handleShareToSocialMedia = () => {
+    const content = document.getElementById('pdf-content');
+    html2canvas(content, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const newWindow = window.open();
+      newWindow.document.write(
+        `<html><body><img src="${imgData}" style="width:100%; height:auto;"/></body></html>`
+      );
+      newWindow.document.title = "내 평가 결과 공유하기";
+    });
+  };
+
   return (
     <div className="App">
       <header>
         <h1>가중평균 의사결정 매트릭스 (Weighted Average Decision Matrix)</h1>
       </header>
       <main>
+      <section className="site-description">
+          <p>
+            가중평균 의사결정 매트릭스(WADM)를 통해 다양한 대안과 기준을 비교하여 최적의 결정을 내릴 수 있는 사이트입니다.
+            WADM 도구는 취업, 이직, 창업, 주거지 선택 등 다양한 인생의 중요한 결정에 있어 각 대안의 장단점을 쉽게 분석할 수 있도록 도와줍니다.
+          </p>
+        </section>
         <div className="topic-selector">
           <label htmlFor="topic">주제를 선택하세요: </label>
           <select id="topic" onChange={handleTopicChange}>
@@ -179,7 +199,7 @@ function App() {
           </select>
         </div>
 
-        <div className="custom-topic">
+        {/* <div className="custom-topic">
           <label htmlFor="custom-topic">직접 주제를 입력하세요: </label>
           <input
             type="text"
@@ -190,7 +210,7 @@ function App() {
           <button onClick={generateCriteriaFromGPT} disabled={loading}>
             {loading ? "생성 중..." : "고려사항 생성"}
           </button>
-        </div>
+        </div> */}
 
         <div id="pdf-content">
           <CriteriaTable criteria={criteria} setCriteria={setCriteria} />
@@ -201,12 +221,36 @@ function App() {
 
         {/* 그래프 컴포넌트 추가 */}
         <AlternativeChart alternativeNames={alternativeNames} totals={totals} />
+        
 
         {/* PDF 다운로드 버튼 */}
         <button onClick={handleDownloadPDF} style={{ marginTop: '20px' }}>
           PDF로 다운로드
         </button>
       </main>
+      <footer className="faq-section">
+        <h2>자주 묻는 질문</h2>
+
+        <section>
+          <h3>가중평균 의사결정 매트릭스(WADM)란 무엇인가요?</h3>
+          <p>WADM은 의사결정을 돕기 위해 다양한 대안과 기준을 평가하고, 각 항목에 가중치를 부여하여 최적의 결정을 내리도록 돕는 도구입니다. 이를 통해 사용자는 객관적인 시각으로 선택지를 비교할 수 있습니다.</p>
+        </section>
+
+        <section>
+          <h3>어떤 주제에 이 도구를 사용할 수 있나요?</h3>
+          <p>WADM 도구는 취업, 이직, 창업, 주거지 선택 등 인생의 중요한 결정을 내릴 때 활용할 수 있으며, 그 외에도 자동차 구매, 여행지 선택 등 다양한 상황에 적용 가능합니다.</p>
+        </section>
+
+        <section>
+          <h3>가중치를 설정하는 방법은 무엇인가요?</h3>
+          <p>각 대안의 중요도를 비교해 상대적으로 중요한 항목에는 높은 가중치를, 덜 중요한 항목에는 낮은 가중치를 부여합니다. 이를 통해 사용자는 각 항목의 중요도에 따른 객관적인 평가를 할 수 있습니다.</p>
+        </section>
+
+        <section>
+          <h3>이 사이트의 사용법은 어떻게 되나요?</h3>
+          <p>사이트에 들어오면 우선 주제를 선택하고, 각 대안과 평가 기준을 설정합니다. 이후 각 대안에 점수를 입력하고, 필요 시 추가적인 고려사항을 추가하여 최종 결과를 얻을 수 있습니다. 평가 결과는 PDF로 저장하거나 그래프 형태로 시각화할 수 있습니다.</p>
+        </section>
+      </footer>
     </div>
   );
 }
