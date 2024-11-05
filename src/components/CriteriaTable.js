@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import './CriteriaTable.css'; // CSS 파일을 사용하여 스타일링
 
 function CriteriaTable({ criteria, setCriteria }) {
-  const [errors, setErrors] = useState({}); // 에러 상태 추가
-  const [newCriterionName, setNewCriterionName] = useState(''); // 새 고려사항 이름 상태
-  const [newCriterionImportance, setNewCriterionImportance] = useState(5); // 새 고려사항 중요도
+  const [errors, setErrors] = useState({});
+  const [newCriterionName, setNewCriterionName] = useState('');
+  const [newCriterionImportance, setNewCriterionImportance] = useState(5);
+  const [showModal, setShowModal] = useState(false);
 
-  // 중요도 변경 핸들러
   const handleImportanceChange = (criterionId, value) => {
     if (value < 1 || value > 10) {
       setErrors((prevErrors) => ({
@@ -24,7 +25,6 @@ function CriteriaTable({ criteria, setCriteria }) {
     }
   };
 
-  // 점수 변경 핸들러
   const handleScoreChange = (criterionId, alternativeIndex, value) => {
     if (value < 1 || value > 10) {
       setErrors((prevErrors) => ({
@@ -48,7 +48,6 @@ function CriteriaTable({ criteria, setCriteria }) {
     }
   };
 
-  // 고려사항 추가 핸들러
   const handleAddCriterion = () => {
     if (!newCriterionName.trim()) {
       alert('고려사항 이름을 입력하세요.');
@@ -63,9 +62,9 @@ function CriteriaTable({ criteria, setCriteria }) {
     setCriteria([...criteria, newCriterion]);
     setNewCriterionName('');
     setNewCriterionImportance(5);
+    setShowModal(false);
   };
 
-  // 고려사항 삭제 핸들러
   const handleRemoveCriterion = (criterionId) => {
     const updatedCriteria = criteria.filter((criterion) => criterion.id !== criterionId);
     setCriteria(updatedCriteria);
@@ -131,23 +130,39 @@ function CriteriaTable({ criteria, setCriteria }) {
         </tbody>
       </table>
 
-      {/* 고려사항 추가 입력란 */}
-      <div className="add-criterion">
-        <input
-          type="text"
-          placeholder="고려사항 이름"
-          value={newCriterionName}
-          onChange={(e) => setNewCriterionName(e.target.value)}
-        />
-        <input
-          type="number"
-          min="1"
-          max="10"
-          value={newCriterionImportance}
-          onChange={(e) => setNewCriterionImportance(parseInt(e.target.value) || 5)}
-        />
-        <button onClick={handleAddCriterion}>고려사항 추가</button>
-      </div>
+      {/* 고려사항 추가 버튼 */}
+      <button onClick={() => setShowModal(true)} className="add-criterion-button">
+        + 고려사항 추가
+      </button>
+
+      {/* 고려사항 추가 모달 */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>새로운 고려사항 추가</h3>
+            <label>고려사항 이름 : </label>
+            <input
+              type="text"
+              // placeholder="예: 비용, 시간, 품질 등"
+              value={newCriterionName}
+              onChange={(e) => setNewCriterionName(e.target.value)}
+            />
+            <label>중요도 (1-10) : </label>
+            <input
+              type="number"
+              min="1"
+              max="10"
+              placeholder="1에서 10 사이의 숫자"
+              value={newCriterionImportance}
+              onChange={(e) => setNewCriterionImportance(parseInt(e.target.value) || 5)}
+            />
+            <div className="modal-buttons">
+              <button onClick={handleAddCriterion}>추가</button>
+              <button onClick={() => setShowModal(false)}>취소</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
