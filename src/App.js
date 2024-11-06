@@ -213,7 +213,11 @@ function App() {
         </div> */}
 
         <div id="pdf-content">
-          <CriteriaTable criteria={criteria} setCriteria={setCriteria} />
+        <CriteriaTable
+          criteria={criteria}
+          setCriteria={setCriteria}
+          alternativeNames={alternativeNames} // 전달된 대안 이름
+        />
           <AlternativeSummary totals={totals} alternativeNames={alternativeNames} setAlternativeNames={setAlternativeNames} />
         </div>
 
@@ -250,6 +254,9 @@ function App() {
           <h3>이 사이트의 사용법은 어떻게 되나요?</h3>
           <p>사이트에 들어오면 우선 주제를 선택하고, 각 대안과 평가 기준을 설정합니다. 이후 각 대안에 점수를 입력하고, 필요 시 추가적인 고려사항을 추가하여 최종 결과를 얻을 수 있습니다. 평가 결과는 PDF로 저장하거나 그래프 형태로 시각화할 수 있습니다.</p>
         </section>
+      </footer>
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} bugdict. All rights reserved.</p>
       </footer>
     </div>
   );

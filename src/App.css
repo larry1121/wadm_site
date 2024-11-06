@@ -286,3 +286,18 @@ button:disabled {
 .control-buttons button:last-child {
   margin-right: 0; /* 마지막 버튼의 여백 제거 */
 }
+
+/* 저작권 표시 스타일 */
+.footer {
+  background-color: #f1f4f8;
+  color: #333;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  border-top: 1px solid #dde5ed;
+  margin-top: 20px;
+}
+
+.footer p {
+  margin: 0;
+}

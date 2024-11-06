@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CriteriaTable.css'; // CSS 파일을 사용하여 스타일링
 
-function CriteriaTable({ criteria, setCriteria }) {
+function CriteriaTable({ criteria, setCriteria, alternativeNames}) {
   const [errors, setErrors] = useState({});
   const [newCriterionName, setNewCriterionName] = useState('');
   const [newCriterionImportance, setNewCriterionImportance] = useState(5);
@@ -74,14 +74,14 @@ function CriteriaTable({ criteria, setCriteria }) {
     <div className="criteria-table">
       <h2>고려사항</h2>
       <table>
-        <thead>
+      <thead>
           <tr>
             <th>번호</th>
             <th>고려사항</th>
             <th>중요도</th>
-            <th>대안 1</th>
-            <th>대안 2</th>
-            <th>대안 3</th>
+            {alternativeNames.map((name, index) => (
+              <th key={index}>{name}</th>
+            ))}
             <th>삭제</th>
           </tr>
         </thead>
