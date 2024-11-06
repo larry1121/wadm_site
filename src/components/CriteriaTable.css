@@ -95,4 +95,10 @@
   
   .add-criterion-button{
     margin-top: 10px;
+    background-color: #4a90e2 !important;
+  }
+
+  .add-criterion-button:hover{
+    margin-top: 10px;
+    background-color: #357abd !important;
   }
